@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
 {% load  %}
-    <h1>top page</h1>
+    <h1>可変マスオセロゲーム</h1>
     <button onclick="readRulebook()">利用規約を読む</button>
-    <input type="checkbox" id="accept" onclick="getUserAccept()" disabled>同意する
+    <input type="checkbox" id="accept" onclick="getUserAccept()" disabled>服従する
     <a href="{% url 'topPage2' %}"><button id="goGame" disabled>ゲームに進む</button></a>
     <button onclick="location.href='https://google.com'">やめる</button>
 
