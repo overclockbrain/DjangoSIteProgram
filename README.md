@@ -1,4 +1,4 @@
-# DjangoSIteProgram
+# DjangoSiteProgram
 
 - 卒業研究のDjangoプログラムを管理するためのものだよ
 - ここに作ったものをアップロードしてね
