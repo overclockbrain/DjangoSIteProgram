@@ -1,3 +1,5 @@
+{% load static %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,10 +7,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TopPage</title>
+    <link rel="stylesheet" href="{% static 'snippets/css/style.css' %}">
 </head>
 <body>
+    <header>
+        <h1 class="headline">
+        <a>可変マスオセロ</a>
+      </h1>
+  
+    </header>
+
+    
+   <!-- サイトの中身部分 -->   
     <main class="container">
         {% block main %}{% endblock %}
     </main>
+
+  
+  
+  <!-- footer -->
+  <footer>
+      <h1 class="teammenber">
+          PentAgon I
+      </h1>
+      <ul class="menber-menu">
+          MENBER: 
+          <li>morioka </li>|
+          <li>miyamoto </li>|
+          <li>morita </li>|
+          <li>yoshimoto </li>|
+          <li>takahata </li>
+          </ul>
+        <p>© All rights reserved by morioka</p>
+  </footer>
 </body>
 </html>
