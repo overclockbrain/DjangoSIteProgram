@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 
-from mainsite.views import gamePage, resultPage, topPage
+from mainsite.views import gamePage, resultPage, topPage,topPage2
 
 urlpatterns = [
     path('',topPage, name="topPage"),
+    path('2/',topPage2,name="topPage2"),
     path('game/',gamePage,name="gamePage"),
     path('result/',resultPage, name="resultPage"),
     path('admin/', admin.site.urls),

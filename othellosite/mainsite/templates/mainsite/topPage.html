@@ -4,7 +4,7 @@
     <h1>top page</h1>
     <button onclick="readRulebook()">利用規約を読む</button>
     <input type="checkbox" id="accept" onclick="getUserAccept()" disabled>同意する
-    <button id="goGame" disabled>ゲームに進む</button>
+    <a href="{% url 'topPage2' %}"><button id="goGame" disabled>ゲームに進む</button></a>
     <button onclick="location.href='https://google.com'">やめる</button>
 
 <script lang="text/javascript">
