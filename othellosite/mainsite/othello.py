@@ -7,9 +7,13 @@
 # Revision
 # - first making
 
+# めも
+# のちにクラス化しシングルトンで実装する
+
 INT_BLANC = 0
 INT_WHITE = 1
 INT_BLACK = 2
+
 
 def othello_board(height,width):
     """
@@ -46,5 +50,28 @@ def othello_board(height,width):
     
     return board
 
-def play():
+def play(x , y):
+    """
+    引数で指定された位置に駒を置き、ゲームを進行する
+    ------
+    引数
+    x: int
+        0~n
+    y: int
+        0~n
+    ---
+    返り値
+    ## ゲームの勝ち負け
+    [
+        win : black
+        lose : white
+    ]
+    """
+    board = othello_board(6,6)
+    
+    
+    
+    # ログを取得するプログラム
+    
+    #
     return

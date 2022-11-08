@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<form>
+<table style="margin:auto;height: 300px;width: 300px;" border="1">
+{% for d in board %}
+    <tr>
+    {% for d2 in d %}
+        {% if d2 == 0 %}
+            <td><img src="{% static 'othellosite/media/none.jpg' %}"></td>
+        {% elif d2 == 1 %}
+            <td><img src="{% static 'othellosite/media/white.jpg' %}"></td>
+        {% elif d2 == 2 %}
+            <td><img src="{% static 'othellosite/media/black.jpg' %}"></td>
+        {% endif %}
+    {% endfor %}
+    </tr><br>
+{% endfor %}
+</table>
+</form>
+{% endblock %}
