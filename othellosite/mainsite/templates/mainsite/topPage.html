@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% block main %}
 {% load  %}
-    <h1>可変マスオセロゲーム</h1>
+<!--11/08真ん中に寄せた(K.Y)-->
+<header>
+    <h1 class="headline"><a>確認事項</a></h1>
+</header>
+
+<header>
     <button onclick="readRulebook()">利用規約を読む</button>
     <input type="checkbox" id="accept" onclick="getUserAccept()" disabled>服従する
+</header>
+
+<header>
     <a href="{% url 'topPage2' %}"><button id="goGame" disabled>ゲームに進む</button></a>
     <button onclick="location.href='https://google.com'">やめる</button>
+</header>
+<!--11/08 ここまで(K.Y)-->
 
 <script lang="text/javascript">
     var isCheck = document.getElementById("accept");
