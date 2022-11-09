@@ -2,6 +2,11 @@
 {% load static %}
 {% block main %}
 <form>
+<!-- 
+    form.pyにスライダーを設定してデータをやり取りできるかを表示する
+    そのまま連携してボード作成して表示できるかも
+    オセロをひっくり返すロジックは、画像の座標を設定してどこがクリックされたかをいちいちやり取りする
+-->
 <table style="margin:auto;height: 300px;width: 300px;" border="1">
 {% for d in board %}
     <tr>
