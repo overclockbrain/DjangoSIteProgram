@@ -1,26 +1,110 @@
-{% extends "base.html" %}
-{% load static %}
-{% block main %}
-<form>
 <!-- 
-    form.pyにスライダーを設定してデータをやり取りできるかを表示する
-    そのまま連携してボード作成して表示できるかも
-    オセロをひっくり返すロジックは、画像の座標を設定してどこがクリックされたかをいちいちやり取りする
--->
-<table style="margin:auto;height: 300px;width: 300px;" border="1">
-{% for d in board %}
-    <tr>
-    {% for d2 in d %}
-        {% if d2 == 0 %}
-            <td><img src="{% static 'othellosite/media/none.jpg' %}"></td>
-        {% elif d2 == 1 %}
-            <td><img src="{% static 'othellosite/media/white.jpg' %}"></td>
-        {% elif d2 == 2 %}
-            <td><img src="{% static 'othellosite/media/black.jpg' %}"></td>
-        {% endif %}
-    {% endfor %}
-    </tr><br>
-{% endfor %}
-</table>
-</form>
-{% endblock %}
+    game.html
+
+    created by Y.Miyamoto on 2022.11.8
+
+ -->
+
+ {% extends "base.html" %}
+ {% load pygmentize %}
+ {% load django_bootstrap5 %}
+ {% load static %}
+ {% block extraheader %}
+ <link rel="stylesheet" href="{% static 'othellosite/css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'othellosite/css/body.css' %}">
+ <script src="{% static 'othellosite/js/jquery-3.6.0.min.js' %}"></script>
+ <script src="{% static 'othellosite/js/anime.min.js' %}"></script>
+ <script src="{% static 'othellosite/js/myai.js' %}"></script>
+ <script type="text/javascript">
+     const KOMAIMG = {
+         0: "{% static 'othellosite/img/none.png' %}",
+         1: "{% static 'othellosite/img/black.jpg' %}",
+         2: "{% static 'othellosite/img/white.jpg' %}"
+     }
+     
+     // Pythonとやりとり
+     // References: https://office54.net/python/django/django-ajax
+ 
+     function getCookie(name) {
+         var cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
+             var cookies = document.cookie.split(';');
+             for (var i = 0; i < cookies.length; i++) {
+                 var cookie = jQuery.trim(cookies[i]);
+                 // Does this cookie string begin with the name we want?
+                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                     break;
+                 }
+             }
+         }
+         return cookieValue;
+     }
+ 
+     var csrftoken = getCookie('csrftoken');
+ 
+     function csrfSafeMethod(method) {
+         // these HTTP methods do not require CSRF protection
+         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+     }
+ 
+     $.ajaxSetup({
+         beforeSend: function (xhr, settings) {
+             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
+             }
+         }
+     });
+ 
+     function predict(height, width, state) {
+         console.log("predict", height, width, state);
+         $.ajax({
+             URL: "predict.py",
+             type: "post",
+             url: "{% url 'predict' %}",
+             data: {
+                 "height": height,
+                 "width": width,
+                 "state": JSON.stringify(state),
+             },
+             dataType: "json"
+         }).done(function(response) {
+             console.log(response.height);
+             console.log(response.width);
+             console.log(response.area);
+         }).fail(function() {
+             console.log("failed");
+         });
+ 
+     };
+ 
+ </script>
+ <script src="{% static 'othellosite/js/othello.js' %}"></script>
+ {% endblock %}
+ {% block main %}
+ 
+ 
+ <div id="game_start-section">
+     <div class="view">
+         <h2><span id="turn">黒</span> の番</h2>
+         <h2>白: <span class="putWhite">2</span> 黒: <span class="putBlack">2</span></h2>
+     </div>
+     <div id="playground"></div>
+     <div class="action">
+         <input type="button" id="pass" value="パス" onclick="predict(6, 6, [0, 0, 0, 0])">
+         <input type="button" id="hint" value="ヒント">
+     </div>
+ </div>
+ 
+ 
+ 
+ <script type="text/javascript">
+     const playground = document.getElementById('playground');
+     const board = new Board(6, 6);
+     playground.appendChild(board.boardElement);
+     playground.appendChild(board.messageElement);
+ 
+     console.log(board);
+ </script>
+ 
+ {% endblock %}
