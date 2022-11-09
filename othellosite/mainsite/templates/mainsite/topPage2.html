@@ -1,4 +1,27 @@
 {% extends "base.html" %}
 {% block main %}
-血は
+<form action="">
+    縦：<input type="range" min="4" max="10" step="2" id="high">
+    <input type="number" id="viewy" value="6" readonly><br>
+    横：<input type="range" min="4" max="10" step="2" id="width">
+    <input type="number" id="viewx" value="6" readonly>
+</form>
+
+<script type="text/javascript">
+    let viewy = document.getElementById('viewy');
+    let viewx = document.getElementById('viewx');
+    let h = document.getElementById('high');
+    let w = document.getElementById('width');
+
+
+    // 盤面幅変更時
+    w.addEventListener('input', (e) => {
+        width = e.target.value;
+        viewx.value = width;
+    });
+    h.addEventListener('input', (e) => {
+        height = e.target.value;
+        viewy.value = height;
+    });
+</script>
 {% endblock %}
