@@ -43,7 +43,7 @@ class Board {
                 const cell = document.createElement('td');
                 const koma = new Koma();
                 koma.imgElement.addEventListener('click', () => {
-                    if (koma.state == 0) {
+                    if (koma.state == 0 && this.toggleTurn == 1) {
                         let array = this.searchKoma(y, x, this.toggleTurn);
                         let reFlag = array["count"];
                         
@@ -215,8 +215,10 @@ class Board {
         let passIndex = Object.keys(this.history).length - 1;
         if (this.history[passIndex].flag == 'pass') {
             passIndex --;
-            if (this.history[passIndex].flag == 'pass') {
-                count = 0;
+            if (passIndex > 0) {
+                if (this.history[passIndex].flag == 'pass') {
+                    count = 0;
+                }
             }
         }
         if (!(count)) {
@@ -235,6 +237,9 @@ class Board {
                     "state": JSON.stringify(newState),
                 }
                 predict(data);
+
+                document.getElementById('pass').disabled = true;
+                document.getElementById('hint').disabled = true;
                 
             }
         }
@@ -256,6 +261,9 @@ class Board {
             this.turnEnd();
 
         }
+        
+        document.getElementById('pass').disabled = false;
+        document.getElementById('hint').disabled = false;
     }
 
     search(view = true) {
@@ -286,6 +294,10 @@ class Board {
     pass() {
         let passFlag = this.search(false);
         let message;
+
+        if (!this.history.length) { // 最初の黒ターンだけ合法手があってもpassできる
+            passFlag = false
+        }
         if (passFlag) {
             message = '置ける場所があるので<br>パスできません!!';
         } else {
