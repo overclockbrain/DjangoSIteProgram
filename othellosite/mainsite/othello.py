@@ -15,6 +15,8 @@ INT_WHITE = 1
 INT_BLACK = 2
 
 
+
+
 def othello_board(height,width):
     """
     引数で指定された形のマスを作成し、初期配置したボードを返す

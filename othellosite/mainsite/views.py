@@ -1,9 +1,9 @@
-#from django.shortcuts import render
 from django.http import HttpRequest,JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
+
+from mainsite.game import TurnOfAi
 # Create your views here.
-import mainsite.othello as o
 
 def topPage(request):
     return render(request,"mainsite/topPage.html")
@@ -29,11 +29,13 @@ def predict(request):
 
     print(height,":",width,":",state)
 
-    area = height * width
+    AI = TurnOfAi(height, width, state)
+    action = AI.get_best_hand()
 
-    d = {
-        "height": height,
-        "width": width,
-        "area": state
+    print('action>>>>')
+    print(action)
+
+    response_data = {
+        "action": int(action)
     }
-    return JsonResponse(d)
+    return JsonResponse(response_data)
