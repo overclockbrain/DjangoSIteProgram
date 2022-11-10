@@ -77,7 +77,6 @@
 {% endblock %}
 {% block main %}
 
-
 <div id="game_start-section">
     <div class="view">
         <h2><span id="turn">黒</span> の番</h2>
@@ -85,8 +84,8 @@
     </div>
     <div id="playground"></div>
     <div class="action">
-        <input type="button" id="pass" value="パス" onclick="predict(6, 6, [0, 0, 0, 0])">
-        <input type="button" id="hint" value="ヒント">
+        <input type="button" id="pass" value="パス" onclick="board.pass()">
+        <input type="button" id="hint" value="ヒント" onclick="board.search()">
     </div>
 </div>
 
