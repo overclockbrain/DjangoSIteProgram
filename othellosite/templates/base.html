@@ -14,6 +14,7 @@
     {% block extraheader %}{% endblock %}
 </head>
 <body>
+    <!-------------- header ----------------->
     <header>
       <nav class="navbar navbar-dark navbar-expand-md bg-secondary justify-content-between">
         <div class="container-fluid">
@@ -46,14 +47,19 @@
     </header>
 
     
+
+
+
    <!-- サイトの中身部分 -->   
     <main class="container">
         {% block main %}{% endblock %}
     </main>
 
+
+
+
   
-  
-  <!-- footer -->
+  <!------------------- footer ------------------->
   <footer>
     <div class="container">
       <div class="row">
@@ -86,7 +92,7 @@
           
                <div class="col-md-4 col-sm-6 col-xs-12">
                  <ul class="menber">
-                   <span>Menber</span>       
+                   <span>Member</span>       
                    <li>
                       <i class="bi bi-person-fill" aria-hidden="true"></i> 
                       <a href="#">Morioka</a>
