@@ -3,7 +3,10 @@
  * 
  *  created by Y.Miyamoto on 2022.11.8
  * 
- * 
+ *  Revision
+ *  - ほぼ完成 11.10
+ *
+ *
  */
 
 class Board {
@@ -224,31 +227,34 @@ class Board {
         } else {
             if (this.toggleTurn == 2) {
                 
-                let whiteState = this.getWhiteState();
-                console.log(whiteState);
-                predict(
-                    String(this.height),
-                    String(this.width),
-                    whiteState,
-                )
+                let newState = this.getOneDemensionState();
 
-                /* const AI = new MYAI(2, this.convertBoard());
-                let ans = AI.answer;
-
-                setTimeout(() => {
-                    if (ans) {
-                        let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
-                        this.state[ans[0]][ans[1]].put(this.toggleTurn);
-                        this.reverseKoma(array["place"]);
-                        this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
-
-                        this.turnEnd();
-
-                    } else {
-                        this.pass();
-                    }
-                }, 500);  // 表示を遅延させる */
+                let data = {
+                    "height": String(this.height),
+                    "width": String(this.width),
+                    "state": JSON.stringify(newState),
+                }
+                predict(data);
+                
             }
+        }
+    }
+    aiTurn(index) {
+
+        if (index >= (this.height*this.width)) {
+            this.pass()
+        } else {        
+            let ans = [];
+            ans.push(Math.floor(index / this.width, 0));
+            ans.push(index % this.width);
+
+            let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
+            this.state[ans[0]][ans[1]].put(this.toggleTurn);
+            this.reverseKoma(array["place"]);
+            this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
+
+            this.turnEnd();
+
         }
     }
 
@@ -301,18 +307,14 @@ class Board {
         return newBoard;
     }
 
-    getWhiteState() {
-        let whiteState = new Array()
+    getOneDemensionState() {
+        let newState = new Array()
         for (let i in this.state) {
             for (let j in this.state[i]) {
-                if (this.state[i][j]["state"] == 2) {
-                    whiteState.push(1);
-                } else {
-                    whiteState.push(0);
-                }
+                newState.push(this.state[i][j]["state"]);
             }
         }
-        return whiteState;
+        return newState;
     }
 }
 

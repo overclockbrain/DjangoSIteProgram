@@ -2,7 +2,6 @@
 //  ミニマックス法
 
 // predict: 最も多くのコマを裏返すことができる
-// leaves: 
 
 class MYAI {
     constructor(color, state) {
