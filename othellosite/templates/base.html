@@ -9,6 +9,7 @@
     <title>TopPage</title>
     <link rel="stylesheet" href="{% static 'othellosite/css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     {% block extraheader %}{% endblock %}
 </head>
@@ -32,7 +33,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="/" class="navbar-brand mx-auto d-block text-center order-8 order-md-1 w-25">Othello</a>
+            <a href="/" class="navbar-brand mx-auto d-block text-center order-8 order-md-1 w-25">Variable Othello</a>
             <div class="navbar-collapse collapse dual-nav w-50 order-2">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href=""><i class="fa fa-twitter"></i></a></li>
@@ -53,20 +54,63 @@
   
   
   <!-- footer -->
-  <footer class="fixed-bottom">
-    
-      <h1 class="teammenber">
-          PentAgon I
-      </h1>
-      <ul class="menber-menu">
-          MENBER: 
-          <li>morioka </li>|
-          <li>miyamoto </li>|
-          <li>morita </li>|
-          <li>yoshimoto </li>|
-          <li>takahata </li>
-          </ul>
-        <p>© All rights reserved by morioka</p>
-  </footer>
+  <footer>
+    <div class="container">
+      <div class="row">
+               <div class="col-md-4 col-sm-6 col-xs-12">
+                 <img src="{% static 'othellosite/media/teamlogo.png' %}"width="150">
+                 <span class="school">
+                    <p>Electronics Development Computer College</p>
+                    <p>Osaka Computer School</p>
+                    <p>1-5-21, Nakamoto, Osaka city Higashinari ward,</p>
+                    <p>Osaka prefecture, 537-0022, Japan</p>
+                    <p>Tel: +81-6-6974-4611 , Fax: +81-6-6971-5474</p>
+                 </span>
+               </div>
+               
+               <div class="col-md-4 col-sm-6 col-xs-12">
+                   <ul class="menu">
+                        <span>Menu</span>    
+                        <li>
+                           <a href="#">Top</a>
+                         </li> 
+                         <li>
+                            <a href="#">Rate</a>
+                         </li>
+                         <li>
+                           <a href="#">Overview</a>
+                         </li>
+                              
+                    </ul>
+               </div>
+          
+               <div class="col-md-4 col-sm-6 col-xs-12">
+                 <ul class="menber">
+                   <span>Menber</span>       
+                   <li>
+                      <i class="bi bi-person-fill" aria-hidden="true"></i> 
+                      <a href="#">Morioka</a>
+                   </li>
+                   <li>
+                      <i class="bi bi-person-fill" aria-hidden="true"></i> 
+                      <a href="#">Miyamoto</a>
+                   </li> 
+                   <li>
+                      <i class="bi bi-person-fill" aria-hidden="true"></i> 
+                      <a href="#">Morita</a>
+                   </li>
+                   <li>
+                      <i class="bi bi-person-fill" aria-hidden="true"></i> 
+                      <a href="#">Yoshimoto</a>
+                   </li> 
+                   <li>
+                       <i class="bi bi-person-fill" aria-hidden="true"></i> 
+                       <a href="#">Takahata</a>
+                   </li> 
+                  </ul>
+               </div>
+           </div> 
+       </div>
+   </footer>
 </body>
 </html>
