@@ -29,3 +29,20 @@
     ~~~
     好きに遊んでくれ（Gitにあげてるモデルは未学習のモデルでとっても弱い）
 
+
+## memo
+メインブランチとの差異
+- mainsite
+    - templates \ mainsite
+        - gamePage.html
+    - game .py
+    - pv_mcts .py
+    - state .py
+    - views .py
+- static \ othellosite
+    - css
+        - body.css
+    - js
+        - othello.js
+    - model
+        - 4x4.h5 ※ best.h5 から 4x4.h5 にリネームしました
