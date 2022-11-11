@@ -3,14 +3,14 @@
  * 
  *  created by Y.Miyamoto on 2022.11.8
  * 
- *  Revision
- *  - ほぼ完成 11.10
- *
+ * Revision
+ * - 11.10  ほぼ完成
+ * - 11.11  class Board の引数の順を (width, height, ...) から (height, width, ...) に変更した
  *
  */
 
 class Board {
-    constructor(width, height, color = 1) {
+    constructor(height, width, color = 1) {
         this.width = width;
         this.height = height;
         this.toggleTurn = color;
@@ -23,10 +23,10 @@ class Board {
         this.messageElement = document.createElement('div');
         this.messageElement.id = 'message';
 
-        this.setStateAndElement(width, height);
+        this.setStateAndElement(height, width);
     }
 
-    setStateAndElement(width, height) {
+    setStateAndElement(height, width) {
         this.viewMessage('ゲームスタート!');
 
         this.width = width;
@@ -223,7 +223,8 @@ class Board {
         }
         if (!(count)) {
             setTimeout(() => {
-                this.viewMessage('ゲーム終了!!<br>画面をタップ!', 3000);
+                this.viewMessage('ゲーム終了!!<br>リザルト画面へ!', 3000);
+                document.getElementById("to_result_page").style.display = "inline";
                 this.winner = this.countKoma();
             }, 1000);
         } else {
@@ -248,6 +249,23 @@ class Board {
 
         if (index >= (this.height*this.width)) {
             this.pass()
+        } else if (index < 0) {
+            const AI = new MYAI(2, this.convertBoard());
+            let ans = AI.answer;
+
+            setTimeout(() => {
+                if (ans) {
+                    let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
+                    this.state[ans[0]][ans[1]].put(this.toggleTurn);
+                    this.reverseKoma(array["place"]);
+                    this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
+
+                    this.turnEnd();
+
+                } else {
+                    this.pass();
+                }
+            }, 500);  // 表示を遅延させる
         } else {        
             let ans = [];
             ans.push(Math.floor(index / this.width, 0));
@@ -280,6 +298,8 @@ class Board {
                         if (view) {
                             this.state[y][x].hint();
                         }
+                    } else {
+                        this.viewMessage('置ける場所がないのでパスしてください');
                     }
                 }
             }
@@ -340,11 +360,6 @@ class Board {
 const KOMACOLOR = {
     0: 'no', 1: '黒', 2: '白'
 }
-/* const KOMAIMG = {
-    0: './img/none.png',
-    1: './img/black.jpg',
-    2: './img/white.jpg'
-} */
 
 class Koma {
     constructor() {
