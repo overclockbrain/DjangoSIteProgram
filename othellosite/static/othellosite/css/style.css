@@ -26,8 +26,26 @@ header .headline{
 }
 /*----------------------------*/
 
+.button{
+    width: 100%;
+    padding: 15px 0;
+    margin: 0 auto;
+    text-align: center;
+}
 
+.inline-block{
+    display: inline-block;
+}
 
+input {
+    padding: 0 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+form{
+    text-align: center;
+}
 
 
 
