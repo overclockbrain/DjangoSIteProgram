@@ -71,7 +71,6 @@
             console.log("failed");
         });
     };
-
 </script>
 <script src="{% static 'othellosite/js/othello.js' %}"></script>
 {% endblock %}
@@ -86,6 +85,7 @@
     <div class="action">
         <input type="button" id="pass" value="パス" onclick="board.pass()">
         <input type="button" id="hint" value="ヒント" onclick="board.search()">
+        <a id="to_result_page" href="{% url 'resultPage' %}"><hr><input type="button" value="リザルト画面に進む"></a>
     </div>
 </div>
 
@@ -93,9 +93,11 @@
 
 <script type="text/javascript">
     const playground = document.getElementById('playground');
-    const board = new Board(6, 6);
+    const board = new Board(4, 4);
     playground.appendChild(board.boardElement);
     playground.appendChild(board.messageElement);
+
+    document.getElementById("to_result_page").style.display = "none";
 
     console.log(board);
 </script>

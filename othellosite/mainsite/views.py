@@ -1,3 +1,12 @@
+# ====================================================================== #
+#   views.py
+# 
+# Revision
+# - 11.9    Y.M js (ajax)から送られてきたデータを受けとる
+# - 11.10   Y.M モデルを用いた推論を行う機能の実装
+# - 11.11   Y.M 可変マスに対応させる
+#  ====================================================================== #
+
 from django.http import HttpRequest,JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
@@ -27,15 +36,14 @@ def predict(request):
     width = int(request.POST.get("width"))
     state = request.POST.getlist("state")
 
-    print(height,":",width,":",state)
-
     AI = TurnOfAi(height, width, state)
-    action = AI.get_best_hand()
-
-    print('action>>>>')
-    print(action)
+    if (AI.model):
+        action = AI.get_best_hand()     # 推論を行い最善手を取得する
+    else:
+        action = -1
 
     response_data = {
         "action": int(action)
     }
+    
     return JsonResponse(response_data)

@@ -6,7 +6,7 @@
 #   createcd by Y.Miyamoto on 2022.11.10
 # 
 # Revision
-# - first making
+# - first making    11.10
 # 
 # ====================================================================== # 
 
@@ -15,13 +15,13 @@ from math import sqrt
 import numpy as np
 
 # パラメータの準備
-HEIGHT = 6
-WIDTH = 6
-PV_EVALUATE_COUNT = 50 # 1推論あたりのシミュレーション回数（本家は1600）
-DN_INPUT_SHAPE = (HEIGHT, WIDTH, 2)
+PV_EVALUATE_COUNT = 80 # 1推論あたりのシミュレーション回数（本家は1600）
 
 # 推論
 def predict(model, state):
+    
+    DN_INPUT_SHAPE = (state.height, state.width, 2)
+
     # 推論のための入力データのシェイプの変換
     a, b, c = DN_INPUT_SHAPE
     x = np.array([state.pieces, state.enemy_pieces])

@@ -6,8 +6,8 @@
 # 
 # 
 # Revision
-# - first making
-# 
+# - first making 11.10
+# - 関数 get_model_file の作成．盤面ごとのモデルの選択をできるようにした．11.11
 # 
 # ====================================================================== #
 
@@ -15,6 +15,7 @@
 from mainsite.state import State
 from mainsite.pv_mcts import pv_mcts_action
 from tensorflow.keras.models import load_model
+import os
 
 class TurnOfAi():
     def __init__(self, height, width, js_state):
@@ -22,17 +23,14 @@ class TurnOfAi():
         self.width = width
         self.area = height * width
 
-        self.model = load_model('static/othellosite/model/best.h5')
+        self.model = self.get_model_file()
 
         self.state = State(height=self.height, width=self.width, depth=1)
         self.update_state(js_state)
 
-        self.next_action = pv_mcts_action(self.model, 0.0)
+        self.next_action = pv_mcts_action(self.model, 0.0) if (self.model) else False
         
     def update_state(self, js_state):
-
-        print('turu of ai.')
-        print(js_state, type(js_state), len(js_state[0]))
 
         li_state = js_state[0][1:-1].split(',')
 
@@ -56,3 +54,15 @@ class TurnOfAi():
     def get_best_hand(self):
         return self.next_action(self.state)
         
+    def get_model_file(self):
+        FILE_BASE_NAME = "static/othellosite/model/$$$.h5"
+        file_name = FILE_BASE_NAME.replace("$$$", str(self.height)+"x"+str(self.width))
+
+        if os.path.isfile(file_name):
+            return load_model(file_name)
+        else:
+            return False
+        
+
+
+

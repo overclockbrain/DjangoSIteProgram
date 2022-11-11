@@ -5,7 +5,7 @@
 #   created by Y.Miyamoto on 2022.11.10
 # 
 # Revision
-# - first making
+# - first making    11.10
 # 
 # ====================================================================== #
 
