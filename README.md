@@ -45,4 +45,4 @@
     - js
         - othello.js
     - model
-        - 4x4.h5 ※ best.h5 から 4x4.h5 にリネームしました
+        - 6x6.h5 ※ best.h5 から 6x6.h5 にリネームしました
