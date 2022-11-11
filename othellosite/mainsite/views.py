@@ -15,7 +15,14 @@ def gamePage(request):
     """ boardInfo = {}
     boardInfo["board"] = o.othello_board(6,6)
     return render(request,"mainsite/gamePage.html",boardInfo) """
-    return render(request,"mainsite/gamePage.html")
+    if request.method == "POST":
+        height = request.POST["high"]
+        width = request.POST["width"]
+        board = {
+            "height":height,
+            "width":width
+        }
+        return render(request,"mainsite/gamePage.html",board)
 
 def resultPage(request):
     return render(request,"mainsite/result.html")

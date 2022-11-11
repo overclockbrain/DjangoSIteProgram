@@ -100,7 +100,9 @@
  
  <script type="text/javascript">
      const playground = document.getElementById('playground');
-     const board = new Board(6, 6);
+     {% autoescape off %}
+     const board = new Board({{ height }},{{ width }});
+     {% endautoescape %}
      playground.appendChild(board.boardElement);
      playground.appendChild(board.messageElement);
  
