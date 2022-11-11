@@ -11,6 +11,13 @@ header {
     text-align: center;
     font-family: 游明朝;
 }
+/*------result画面------*/
+#win{
+    color: #fe0606;
+    text-align: center;
+    font-family: 游明朝;
+}
+/*------(K.Y変更↑)-------*/
 header .headline{
     font-size: 32px;
 }
