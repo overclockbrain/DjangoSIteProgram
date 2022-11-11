@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block main %}
+{% load static %}
+<div>
+    <h1>ゲーム終了</h1>
+    <div>
+        <h2>白: <span class="putWhite">2</span> 黒: <span class="putBlack">2</span></h2>
+    </div>
+</div>
+
+<div>
+    <h2>
+        <div id="win">Winner</div>：白
+    </h2>
+</div>
+
+<div>
+
+<a href="{% url 'topPage2' %}">{% bootstrap_button button_type="submit" content="スタート画面に戻る" %}</a>
+
+</div>
+{% endblock %}
