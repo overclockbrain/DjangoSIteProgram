@@ -2,31 +2,30 @@
 {% block main %}
 {% load static %}
 <!--11/08真ん中に寄せた(K.Y)-->
-<header>
+<div>
     <h1 class="headline"><a>確認事項</a></h1>
 
     <!--11/10pdfサイト貼り付け-->
-    <a href="https://DjangoSIteProgram-main/利用規約.pdf"><button onclick="readRulebook()">利用規約を読む</button></a>
+    <a href="{% static 'othellosite/pdf/利用規約.pdf' %}" target="_blank"><button onclick="readRulebook()">利用規約を読む</button></a>
 
     <input type="checkbox" id="accept" onclick="getUserAccept()" disabled>服従する
 
     
-</header>
+</div>
 
 <!--11/08 ここまで(K.Y)-->
 <!--11/09追加（K.Y）-->
-<header>
-    <div class="inner">
-        <img src="{% static 'othellosite/media/osero.jpg' %}"alt="" width="600" height="300">
-    </div>
-</header>
+
+<div class="inner">
+    <img src="{% static 'othellosite/media/osero.jpg' %}"alt="" width="600" height="300">
+</div>
 <!--11/09ここまで-->
 
-<header>
+<div>
     <a href="{% url 'topPage2' %}"><button id="goGame" disabled>ゲームに進む</button></a>
     
     <button onclick="location.href='https://google.com'">やめる</button>
-</header>
+</div>
 
 <script lang="text/javascript">
     var isCheck = document.getElementById("accept");
