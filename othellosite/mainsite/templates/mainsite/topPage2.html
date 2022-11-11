@@ -9,12 +9,12 @@
 
 <form action="">
     縦：<input type="range" min="4" max="10" step="2" id="high">
-    <input type="number" id="viewy" value="6" readonly><br>
+    <input type="number" id="viewy" value="8" readonly><br>
     横：<input type="range" min="4" max="10" step="2" id="width">
-    <input type="number" id="viewx" value="6" readonly>
+    <input type="number" id="viewx" value="8" readonly>
 </form>
 
-<a href="{% url 'gamePage' %}">{% bootstrap_button button_type="submit" content="ゲームスタート" %}</a>
+<a class="inline-block button" href="{% url 'gamePage' %}">{% bootstrap_button button_type="submit" content="ゲームスタート" %}</a>
 
 <script type="text/javascript">
     let viewy = document.getElementById('viewy');
