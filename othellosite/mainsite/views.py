@@ -1,15 +1,22 @@
-#from django.shortcuts import render
+"""
+Created by R.Morioka 11/14
+Merge Miyamoto's Program
+
+"""
 from django.http import HttpRequest,JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 # Create your views here.
-import mainsite.othello as o
+from mainsite.game import TurnOfAi
 
+
+# topページの表示設定
 def topPage(request):
     return render(request,"mainsite/topPage.html")
 
-def topPage2(request):
-    return render(request,"mainsite/topPage2.html")
+# 同意後のtopページの設定
+def acceptedTopPage(request):
+    return render(request,"mainsite/acceptedTopPage.html")
 
 def gamePage(request):
     """ boardInfo = {}
@@ -25,7 +32,15 @@ def gamePage(request):
         return render(request,"mainsite/gamePage.html",board)
 
 def resultPage(request):
-    return render(request,"mainsite/result.html")
+    if request.method == "POST":
+        white = int(request.POST["whiteVal"])
+        black = int(request.POST["blackVal"])
+        komaInfo = {
+            "white":white,
+            "black":black
+        }
+            
+        return render(request,"mainsite/result.html",komaInfo)
 
 # ajax で送られてきたデータ取得
 def predict(request):
@@ -33,14 +48,14 @@ def predict(request):
     height = int(request.POST.get("height"))
     width = int(request.POST.get("width"))
     state = request.POST.getlist("state")
+    AI = TurnOfAi(height, width, state)
+    if (AI.model):
+        action = AI.get_best_hand()     # 推論を行い最善手を取得する
+    else:
+        action = -1
 
-    print(height,":",width,":",state)
-
-    area = height * width
-
-    d = {
-        "height": height,
-        "width": width,
-        "area": state
+    response_data = {
+        "action": int(action)
     }
-    return JsonResponse(d)
+    
+    return JsonResponse(response_data)

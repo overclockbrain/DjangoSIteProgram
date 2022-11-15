@@ -5,19 +5,27 @@
 <div>
     <h1>ゲーム終了</h1>
     <div>
-        <h2>白: <span class="putWhite">2</span> 黒: <span class="putBlack">2</span></h2>
+        <h2>白: <span class="putWhite">{{ white }}</span> 黒: <span class="putBlack">{{ black }}</span></h2>
     </div>
 </div>
 
 <div>
-    <h2>
-        <div id="win">Winner</div>：白
+    <h2><div id="win">Winner</div>：
+        {% if white < black %}
+        黒
+        {% elif white > black %}
+        白
+        {% elif white == black %}
+        ドロー
+        {% else %}
+        none game
+        {% endif %}
     </h2>
 </div>
 
 <div>
 
-<a href="{% url 'topPage2' %}">{% bootstrap_button button_type="submit" content="スタート画面に戻る" %}</a>
+<a href="{% url 'acceptedTopPage' %}">{% bootstrap_button button_type="submit" content="スタート画面に戻る" %}</a>
 
 </div>
 {% endblock %}

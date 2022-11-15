@@ -3,11 +3,14 @@
  * 
  *  created by Y.Miyamoto on 2022.11.8
  * 
- * 
+ * Revision
+ * - 11.10  ほぼ完成
+ * - 11.11  class Board の引数の順を (width, height, ...) から (height, width, ...) に変更した
+ *
  */
 
 class Board {
-    constructor(width, height, color = 1) {
+    constructor(height, width, color = 1) {
         this.width = width;
         this.height = height;
         this.toggleTurn = color;
@@ -20,10 +23,10 @@ class Board {
         this.messageElement = document.createElement('div');
         this.messageElement.id = 'message';
 
-        this.setStateAndElement(width, height);
+        this.setStateAndElement(height, width);
     }
 
-    setStateAndElement(width, height) {
+    setStateAndElement(height, width) {
         this.viewMessage('ゲームスタート!');
 
         this.width = width;
@@ -40,7 +43,7 @@ class Board {
                 const cell = document.createElement('td');
                 const koma = new Koma();
                 koma.imgElement.addEventListener('click', () => {
-                    if (koma.state == 0) {
+                    if (koma.state == 0 && this.toggleTurn == 1) {
                         let array = this.searchKoma(y, x, this.toggleTurn);
                         let reFlag = array["count"];
                         
@@ -163,6 +166,10 @@ class Board {
     countKoma() {
         let putWhite = document.getElementsByClassName('putWhite'),
             putBlack = document.getElementsByClassName('putBlack');
+        //hidden要素にvalue追加
+        let whiteVal = document.getElementById("whiteVal"),
+            blackVal = document.getElementById("blackVal");
+
 
         let black = 0;
         let white = 0;
@@ -177,10 +184,15 @@ class Board {
         }
         for (const element of putWhite) {
             element.innerHTML = white;
+            whiteVal.setAttribute("value",white);
         }
         for (const element of putBlack) {
             element.innerHTML = black;
+            blackVal.setAttribute("value",black);
         }
+
+        //ここ使えないからいるのかな？？
+        //by 森岡の独り言...笑
         let winFlag = black - white;
         if (winFlag > 0) {
             return 'black';
@@ -212,44 +224,73 @@ class Board {
         let passIndex = Object.keys(this.history).length - 1;
         if (this.history[passIndex].flag == 'pass') {
             passIndex --;
-            if (this.history[passIndex].flag == 'pass') {
-                count = 0;
+            if (passIndex > 0) {
+                if (this.history[passIndex].flag == 'pass') {
+                    count = 0;
+                }
             }
         }
         if (!(count)) {
             setTimeout(() => {
-                this.viewMessage('ゲーム終了!!<br>画面をタップ!', 3000);
+                this.viewMessage('ゲーム終了!!<br>リザルト画面へ!', 3000);
+                document.getElementById("to_result_page").style.display = "inline";
                 this.winner = this.countKoma();
             }, 1000);
         } else {
             if (this.toggleTurn == 2) {
                 
-                let whiteState = this.getWhiteState();
-                console.log(whiteState);
-                predict(
-                    String(this.height),
-                    String(this.width),
-                    whiteState,
-                )
+                let newState = this.getOneDemensionState();
 
-                /* const AI = new MYAI(2, this.convertBoard());
-                let ans = AI.answer;
+                let data = {
+                    "height": String(this.height),
+                    "width": String(this.width),
+                    "state": JSON.stringify(newState),
+                }
+                predict(data);
 
-                setTimeout(() => {
-                    if (ans) {
-                        let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
-                        this.state[ans[0]][ans[1]].put(this.toggleTurn);
-                        this.reverseKoma(array["place"]);
-                        this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
-
-                        this.turnEnd();
-
-                    } else {
-                        this.pass();
-                    }
-                }, 500);  // 表示を遅延させる */
+                document.getElementById('pass').disabled = true;
+                document.getElementById('hint').disabled = true;
+                
             }
         }
+    }
+    aiTurn(index) {
+
+        if (index >= (this.height*this.width)) {
+            this.pass()
+        } else if (index < 0) {
+            const AI = new MYAI(2, this.convertBoard());
+            let ans = AI.answer;
+
+            setTimeout(() => {
+                if (ans) {
+                    let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
+                    this.state[ans[0]][ans[1]].put(this.toggleTurn);
+                    this.reverseKoma(array["place"]);
+                    this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
+
+                    this.turnEnd();
+
+                } else {
+                    this.pass();
+                }
+            }, 500);  // 表示を遅延させる
+        } else {        
+            let ans = [];
+            ans.push(Math.floor(index / this.width, 0));
+            ans.push(index % this.width);
+
+            let array = this.searchKoma(ans[0], ans[1], this.toggleTurn);
+            this.state[ans[0]][ans[1]].put(this.toggleTurn);
+            this.reverseKoma(array["place"]);
+            this.history.push({color: this.toggleTurn, flag: 'put', put: [ans[0], ans[1]], state: this.state});
+
+            this.turnEnd();
+
+        }
+        
+        document.getElementById('pass').disabled = false;
+        document.getElementById('hint').disabled = false;
     }
 
     search(view = true) {
@@ -266,6 +307,8 @@ class Board {
                         if (view) {
                             this.state[y][x].hint();
                         }
+                    } else {
+                        this.viewMessage('置ける場所がないのでパスしてください');
                     }
                 }
             }
@@ -280,6 +323,10 @@ class Board {
     pass() {
         let passFlag = this.search(false);
         let message;
+
+        if (!this.history.length) { // 最初の黒ターンだけ合法手があってもpassできる
+            passFlag = false
+        }
         if (passFlag) {
             message = '置ける場所があるので<br>パスできません!!';
         } else {
@@ -301,18 +348,14 @@ class Board {
         return newBoard;
     }
 
-    getWhiteState() {
-        let whiteState = new Array()
+    getOneDemensionState() {
+        let newState = new Array()
         for (let i in this.state) {
             for (let j in this.state[i]) {
-                if (this.state[i][j]["state"] == 2) {
-                    whiteState.push(1);
-                } else {
-                    whiteState.push(0);
-                }
+                newState.push(this.state[i][j]["state"]);
             }
         }
-        return whiteState;
+        return newState;
     }
 }
 
@@ -326,11 +369,6 @@ class Board {
 const KOMACOLOR = {
     0: 'no', 1: '黒', 2: '白'
 }
-/* const KOMAIMG = {
-    0: './img/none.png',
-    1: './img/black.jpg',
-    2: './img/white.jpg'
-} */
 
 class Koma {
     constructor() {
