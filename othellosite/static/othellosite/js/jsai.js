@@ -6,11 +6,11 @@ class JsAi {
 
 		this.legalHand = new Array();
 
-		this.predict();
+		this.Predict();
 	}
 
 	get answer() {
-		let max = 0;
+		let max = -999;
 		let bestHands = new Array();
 
 		for (let i in this.legalHand) {
@@ -23,12 +23,22 @@ class JsAi {
 				bestHands.push(this.legalHand[i]["place"])
 			}
 		}
-
 		return bestHands[Math.floor(Math.random()*bestHands.length)];
 	}
 
-	predict() {
+	Predict() {
 		this.legalHand = this.Search();
+
+        for (let i in this.legalHand) {
+            let y = this.legalHand[i]["place"][0];
+            let x = this.legalHand[i]["place"][1];
+            if (this.IsCorner(y, x)) {
+                this.legalHand[i]["count"] = 999;
+            }
+            if (this.IsNextToCorner(y, x)) {
+                this.legalHand[i]["count"] -= 3;
+            }
+        }
 	}
 
 	/**
@@ -46,7 +56,7 @@ class JsAi {
                     if (reFlag) {
 						let a = new Object()
 						a.count = array["count"];
-                        a.place = array["place"].push([y, x]);
+                        a.place = [y, x];
                         putArray.push(a);
                     }
                 }
@@ -103,10 +113,29 @@ class JsAi {
 
         return { count: reverseCount, place: reverseArray };
     }
-    Corner(board, stateY, stateX) {
-        let yCorner = board.length - 1;
-        let xCorner = board[0].length - 1;
+
+    IsCorner(stateY, stateX) {
+        let yCorner = this.STATE.length - 1;
+        let xCorner = this.STATE[0].length - 1;
         return !!((stateY == 0 && stateX == 0) || (stateY == 0 && stateX == xCorner) ||
             (stateY == yCorner && stateX == 0) || (stateY == yCorner && stateX == xCorner));
+    }
+    IsNextToCorner(stateY, stateX) {
+        let dangerPlace = new Array();
+        let yl = this.STATE.length - 1;
+        let xl = this.STATE[0].length - 1;
+        dangerPlace.push([0, 1], [1, 0], [1, 1]);
+        dangerPlace.push([0, xl-1], [1, xl-1], [1, xl]);
+        dangerPlace.push([yl-1, 0], [yl-1, 1], [yl, 1]);
+        dangerPlace.push([yl-1, xl-1], [yl-1, xl], [yl, xl-1]);
+
+        for(let i in dangerPlace) {
+            let y = dangerPlace[i][0];
+            let x = dangerPlace[i][1];
+            if (y == stateY && x == stateX) {
+                return true;
+            }
+        }
+        return false;
     }
 }
