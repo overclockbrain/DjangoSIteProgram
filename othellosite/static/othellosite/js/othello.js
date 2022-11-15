@@ -259,7 +259,7 @@ class Board {
         if (index >= (this.height*this.width)) {
             this.pass()
         } else if (index < 0) {
-            const AI = new MYAI(2, this.convertBoard());
+            const AI = new JsAi(2, this.convertBoard());
             let ans = AI.answer;
 
             setTimeout(() => {
