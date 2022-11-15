@@ -30,6 +30,9 @@ def gamePage(request):
             "width":width
         }
         return render(request,"mainsite/gamePage.html",board)
+    
+    # 何もポストされてない状態だとtopに返す。
+    return render(request,"mainsite/topPage.html")
 
 def resultPage(request):
     if request.method == "POST":
@@ -41,6 +44,8 @@ def resultPage(request):
         }
             
         return render(request,"mainsite/result.html",komaInfo)
+    # 何もポストされてない状態だとtopに返す。
+    return render(request,"mainsite/topPage.html")
 
 # ajax で送られてきたデータ取得
 def predict(request):
