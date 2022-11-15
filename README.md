@@ -21,6 +21,16 @@ python –m venv お好きな名前
 pip install django
 pip install django-bootstrap5
 ~~~
+- ゲームで遊ぶために  
+~~~bash
+# tensorflowの最新版をダウンロード
+# 時間はかかるので紅茶を飲んで待ちましょう
+pip install --upgrade tensorflow
+pip install numpy
+
+# この中にtensorflowとnumpyがあることを確認
+pip list
+~~~
 - ダウンロードまたはクローンしたフォルダーでmanage.pyがあるディレクトリまでコマンドで移動
 ~~~bash
 python manage.py runserver
