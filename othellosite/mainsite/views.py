@@ -8,6 +8,7 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 # Create your views here.
 from mainsite.game import TurnOfAi
+from mainsite.models import AiLoseManage,AiWinManage,PlayBoardMange
 
 
 # topページの表示設定
@@ -29,6 +30,9 @@ def gamePage(request):
             "height":height,
             "width":width
         }
+        # データベースに保存
+        playboardmanage = PlayBoardMange(width=width,height=height)
+        playboardmanage.save()
         return render(request,"mainsite/gamePage.html",board)
     
     # 何もポストされてない状態だとtopに返す。
@@ -38,9 +42,30 @@ def resultPage(request):
     if request.method == "POST":
         white = int(request.POST["whiteVal"])
         black = int(request.POST["blackVal"])
+        height = int(request.POST["height"])
+        width = int(request.POST["width"])
+        if black < white:
+            winner = "AI"
+        elif black > white:
+            winner = "あなた"
+            """
+            もし、AIが負けた場合は日付とデータがどこにあるのか
+            保存する
+            import datatime
+            today = datetime.date.today()
+            lose = AILoseManage(game_date=today,file_path=,width=width,height=height)
+            """
+        elif white == black:
+            winner = "ドロー"
+        else:
+            winner = "error:正しく実行してください"
+        
+        win = AiWinManage(winLoseDate=winner)
+        win.save()
         komaInfo = {
             "white":white,
-            "black":black
+            "black":black,
+            "winner":winner
         }
             
         return render(request,"mainsite/result.html",komaInfo)

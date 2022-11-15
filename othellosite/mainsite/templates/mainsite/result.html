@@ -10,17 +10,7 @@
 </div>
 
 <div>
-    <h2><div id="win">Winner</div>：
-        {% if white < black %}
-        黒
-        {% elif white > black %}
-        白
-        {% elif white == black %}
-        ドロー
-        {% else %}
-        none game
-        {% endif %}
-    </h2>
+    <h2><div id="win">Winner</div>：{{ winner }}</h2>
 </div>
 
 <div>

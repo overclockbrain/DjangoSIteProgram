@@ -90,6 +90,8 @@
          <h2>白: <span class="putWhite" id="white">2</span> 黒: <span class="putBlack" id="black">2</span></h2>
          <input type="hidden" id="whiteVal" name="whiteVal" value="2">
          <input type="hidden" id="blackVal" name="blackVal" value="2">
+         <input type="hidden" id="height" name="height">
+         <input type="hidden" id="width" name="width">
      </div>
      <div id="playground"></div>
      <div class="action">
@@ -110,6 +112,9 @@
      playground.appendChild(board.messageElement);
  
      console.log(board);
+     //hidden要素を追加する
+     document.getElementById("height").setAttribute("value",{{ height }});
+     document.getElementById("width").setAttribute("value",{{ width }});
  </script>
  
  {% endblock %}
