@@ -296,6 +296,7 @@ class Board {
     search(view = true) {
         let reverseArray = new Array();
         let reFlag;
+        let putPlaceFlag = false;
 
         for (let y = 0; y < this.height; y ++) {
             for (let x = 0; x < this.width; x ++) {
@@ -307,11 +308,13 @@ class Board {
                         if (view) {
                             this.state[y][x].hint();
                         }
-                    } else {
-                        this.viewMessage('置ける場所がないのでパスしてください');
+                        putPlaceFlag = true;
                     }
                 }
             }
+        }
+        if (!putPlaceFlag) {
+            this.viewMessage('置ける場所がないのでパスしてください');
         }
 
         return Object.keys(reverseArray).length;

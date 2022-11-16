@@ -27,7 +27,7 @@ class JsAi {
 	}
 
 	Predict() {
-		this.legalHand = this.Search();
+		this.legalHand = this.Search(this.STATE, this.COLOR);
 
         for (let i in this.legalHand) {
             let y = this.legalHand[i]["place"][0];
@@ -35,8 +35,16 @@ class JsAi {
             if (this.IsCorner(y, x)) {
                 this.legalHand[i]["count"] = 999;
             }
-            if (this.IsNextToCorner(y, x)) {
-                this.legalHand[i]["count"] -= 3;
+            let nextState = this.ReverseState(this.COLOR, this.legalHand[i]["place"], this.legalHand[i]["reArray"]);
+            let nextHand = this.Search(nextState, (this.COLOR%2+1));
+
+            for (let j in nextHand) {
+                let ny = nextHand[j]["place"][0];
+                let nx = nextHand[j]["place"][1];
+
+                if (this.IsCorner(ny, nx)) {
+                    this.legalHand[i]["count"] -= 5;
+                }
             }
         }
 	}
@@ -45,24 +53,43 @@ class JsAi {
      * 合法手を探し、配列にして返す
      * @returns 要素の最後にkomaを置いた場所、それまでがReverese
      */
-	Search() {
+	Search(state, color) {
         let putArray = new Array();
-        for (let y = 0; y < this.STATE.length; y++) {
-            for (let x = 0; x < this.STATE[y].length; x++) {
-                if (this.STATE[y][x] == 0) {
-                    let array = this.ReverseSearch(y, x, this.COLOR, this.STATE);
+        for (let y = 0; y < state.length; y++) {
+            for (let x = 0; x < state[y].length; x++) {
+                if (state[y][x] == 0) {
+                    let array = this.ReverseSearch(y, x, color, state);
                     let reFlag = array["count"];
 
                     if (reFlag) {
 						let a = new Object()
 						a.count = array["count"];
                         a.place = [y, x];
+                        a.reArray = array["place"];
                         putArray.push(a);
                     }
                 }
             }
         }
         return putArray;
+    }
+
+    ReverseState(color, place, reArray) {
+        let board = new Array();
+        for (let i in  this.STATE) {
+            board[i] = new Array();
+            for (let j in this.STATE[i]) {
+                board[i][j] = this.STATE[i][j];
+            }
+        }
+        board[place[0]][place[1]] = color;
+        for (let i in reArray) {
+            let y = reArray[i][0];
+            let x = reArray[i][1];
+            
+            board[y][x] = board[y][x] % 2 + 1;
+        }
+        return board;
     }
 
     ReverseSearch(stateY, stateX, stateColor, board) {
