@@ -2,26 +2,20 @@
     game.html
 
     created by Y.Miyamoto on 2022.11.8
-
- -->
-<!-- 
-    game.html
-
     created by R.Morioka on 2022.11.14
     Do:Merge Miyamoto's branch program
-
  -->
- {% extends "base.html" %}
- {% load pygmentize %}
- {% load django_bootstrap5 %}
- {% load static %}
- {% block extraheader %}
- <link rel="stylesheet" href="{% static 'othellosite/css/style.css' %}">
- <link rel="stylesheet" href="{% static 'othellosite/css/body.css' %}">
- <script src="{% static 'othellosite/js/jquery-3.6.0.min.js' %}"></script>
- <script src="{% static 'othellosite/js/anime.min.js' %}"></script>
- <script src="{% static 'othellosite/js/jsai.js' %}"></script>
- <script type="text/javascript">
+{% extends "base.html" %}
+{% load pygmentize %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block extraheader %}
+<link rel="stylesheet" href="{% static 'othellosite/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'othellosite/css/body.css' %}">
+<script src="{% static 'othellosite/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'othellosite/js/anime.min.js' %}"></script>
+<script src="{% static 'othellosite/js/jsai.js' %}"></script>
+<script type="text/javascript">
     const KOMAIMG = {
         0: "{% static 'othellosite/img/none.png' %}",
         1: "{% static 'othellosite/img/black.jpg' %}",
@@ -76,48 +70,46 @@
         });
     };
 </script>
- <script src="{% static 'othellosite/js/othello.js' %}"></script>
- {% endblock %}
- {% block main %}
- 
- <!-- ここにフォームを入れてうまくPOSTでデータを送信する -->
+<script src="{% static 'othellosite/js/othello.js' %}"></script>
+{% endblock %}
+{% block main %}
 
+<!-- ここにフォームを入れてうまくPOSTでデータを送信する -->
 <form action="{% url 'resultPage' %}" method="post">
     {% csrf_token %}
-<div id="game_start-section">
-     <div class="view">
-         <h2><span id="turn">黒</span> の番</h2>
-         <h2>白: <span class="putWhite" id="white">2</span> 黒: <span class="putBlack" id="black">2</span></h2>
-         <input type="hidden" id="whiteVal" name="whiteVal" value="2">
-         <input type="hidden" id="blackVal" name="blackVal" value="2">
-         <input type="hidden" id="height" name="height">
-         <input type="hidden" id="width" name="width">
-     </div>
-     <div id="playground"></div>
-     <div class="action">
-        <input type="button" id="pass" value="パス" onclick="board.pass()">
-        <input type="button" id="hint" value="ヒント" onclick="board.search()">
-        <hr><input type="submit" value="リザルト画面に進む" id="to_result_page">
+    <div id="game_start-section">
+        <div class="view">
+            <h2><span id="turn">黒</span> の番</h2>
+            <h2>白: <span class="putWhite" id="white">2</span> 黒: <span class="putBlack" id="black">2</span></h2>
+            <input type="hidden" id="whiteVal" name="whiteVal" value="2">
+            <input type="hidden" id="blackVal" name="blackVal" value="2">
+            <input type="hidden" id="height" name="height">
+            <input type="hidden" id="width" name="width">
+        </div>
+        <div id="playground"></div>
+        <div class="action">
+            <input type="button" id="pass" value="パス" onclick="board.pass()">
+            <input type="button" id="hint" value="ヒント" onclick="board.search()">
+            <hr><input type="submit" value="リザルト画面に進む" id="to_result_page">
+        </div>
     </div>
- </div>
 
- </form>
- 
- <script type="text/javascript">
-     const playground = document.getElementById('playground');
-     {% autoescape off %}
-     const board = new Board(parseInt({{ height }}),parseInt({{ width }}));
-     {% endautoescape %}
-     playground.appendChild(board.boardElement);
-     playground.appendChild(board.messageElement);
- 
-     console.log(board);
-     //hidden要素を追加する
-     document.getElementById("height").setAttribute("value",{{ height }});
-     document.getElementById("width").setAttribute("value",{{ width }});
-      
-     document.getElementById("to_result_page").style.display = "none";
+</form>
 
- </script>
- 
- {% endblock %}
+<script type="text/javascript">
+    const playground = document.getElementById('playground');
+    {% autoescape off %}
+    const board = new Board(parseInt({{ height }}), parseInt({{ width }}));
+    {% endautoescape %}
+    playground.appendChild(board.boardElement);
+    playground.appendChild(board.messageElement);
+
+    document.getElementById("to_result_page").style.display = "none";
+
+    console.log(board);
+    //hidden要素を追加する
+    document.getElementById("height").setAttribute("value", {{ height }});
+    document.getElementById("width").setAttribute("value", {{ width }});
+</script>
+
+{% endblock %}
