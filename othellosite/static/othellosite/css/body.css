@@ -1,20 +1,19 @@
 @charset "UTF-8";
 
-body {
-    margin: 0 auto;
-    text-align: center;
-    align-items: center;
+a{
+    text-decoration: none;
 }
-
 
 main div {
     margin: 10px;
 }
 
-input {
+/*input {
+    gamepageで必要
     padding: 10px 40px;
     border-radius: 10px;
 }
+*/
 /* オセロ盤 */
 #mainTable img {
     vertical-align: middle;
