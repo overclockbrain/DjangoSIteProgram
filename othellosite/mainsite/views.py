@@ -2,6 +2,9 @@
 Created by R.Morioka 11/14
 Merge Miyamoto's Program
 
+11/24
+Made DoS Attack avoidance code
+
 """
 from django.http import HttpRequest,JsonResponse
 from django.shortcuts import HttpResponse
@@ -19,6 +22,7 @@ def topPage(request):
 def acceptedTopPage(request):
     return render(request,"mainsite/acceptedTopPage.html")
 
+# ゲームページ
 def gamePage(request):
     """ boardInfo = {}
     boardInfo["board"] = o.othello_board(6,6)
@@ -30,9 +34,7 @@ def gamePage(request):
             "height":height,
             "width":width
         }
-        # データベースに保存
-        playboardmanage = PlayBoardMange(width=width,height=height)
-        playboardmanage.save()
+        request.session["session"] = "session"
         return render(request,"mainsite/gamePage.html",board)
     
     # 何もポストされてない状態だとtopに返す。
@@ -59,16 +61,24 @@ def resultPage(request):
             winner = "ドロー"
         else:
             winner = "error:正しく実行してください"
-        
-        win = AiWinManage(winLoseDate=winner)
-        win.save()
+            
+        # データベースに保存
+        if request.session["session"] == "session":
+            playboardmanage = PlayBoardMange(width=width,height=height)
+            playboardmanage.save()
+            win = AiWinManage(winLoseDate=winner)
+            win.save()
+        else:
+            return render(request,"mainsite/topPage.html")
+            
         komaInfo = {
             "white":white,
             "black":black,
             "winner":winner
         }
-            
+        request.session.clear()
         return render(request,"mainsite/result.html",komaInfo)
+        
     # 何もポストされてない状態だとtopに返す。
     return render(request,"mainsite/topPage.html")
 
