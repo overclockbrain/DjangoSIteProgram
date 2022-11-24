@@ -41,46 +41,45 @@ def gamePage(request):
     return render(request,"mainsite/topPage.html")
 
 def resultPage(request):
-    if request.method == "POST":
-        white = int(request.POST["whiteVal"])
-        black = int(request.POST["blackVal"])
-        height = int(request.POST["height"])
-        width = int(request.POST["width"])
-        if black < white:
-            winner = "AI"
-        elif black > white:
-            winner = "あなた"
-            """
-            もし、AIが負けた場合は日付とデータがどこにあるのか
-            保存する
-            import datatime
-            today = datetime.date.today()
-            lose = AILoseManage(game_date=today,file_path=,width=width,height=height)
-            """
-        elif white == black:
-            winner = "ドロー"
-        else:
-            winner = "error:正しく実行してください"
-            
-        # データベースに保存
-        if request.session["session"] == "session":
+    if "session" in request.session:
+        if request.method == "POST" and request.session["session"] == "session":
+            white = int(request.POST["whiteVal"])
+            black = int(request.POST["blackVal"])
+            height = int(request.POST["height"])
+            width = int(request.POST["width"])
+            if black < white:
+                winner = "AI"
+            elif black > white:
+                winner = "あなた"
+                """
+                もし、AIが負けた場合は日付とデータがどこにあるのか
+                保存する
+                import datatime
+                today = datetime.date.today()
+                lose = AILoseManage(game_date=today,file_path=,width=width,height=height)
+                """
+            elif white == black:
+                winner = "ドロー"
+            else:
+                winner = "error:正しく実行してください"
+                
+            # データベースに保存
+        
             playboardmanage = PlayBoardMange(width=width,height=height)
             playboardmanage.save()
             win = AiWinManage(winLoseDate=winner)
             win.save()
-        else:
-            return render(request,"mainsite/topPage.html")
             
-        komaInfo = {
-            "white":white,
-            "black":black,
-            "winner":winner
-        }
-        request.session.clear()
-        return render(request,"mainsite/result.html",komaInfo)
-        
-    # 何もポストされてない状態だとtopに返す。
-    return render(request,"mainsite/topPage.html")
+            komaInfo = {
+                "white":white,
+                "black":black,
+                "winner":winner
+            }
+            request.session.clear()
+            return render(request,"mainsite/result.html",komaInfo)
+    else:
+        # 何もポストされてない状態だとtopに返す。
+        return render(request,"mainsite/topPage.html")
 
 # ajax で送られてきたデータ取得
 def predict(request):

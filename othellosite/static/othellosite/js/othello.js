@@ -210,7 +210,12 @@ class Board {
         this.countKoma();
 
         this.toggleTurn = this.toggleTurn % 2 + 1;
-        turnElement.innerHTML = KOMACOLOR[this.toggleTurn];
+        if(KOMACOLOR[this.toggleTurn] == "黒"){
+            turnElement.innerHTML = KOMACOLOR[this.toggleTurn] + "(あなた)";
+        }else if(KOMACOLOR[this.toggleTurn] == "白"){
+            turnElement.innerHTML = KOMACOLOR[this.toggleTurn] + "(AI)";
+        }
+        
 
         // game終了条件
         //  # 盤面上全てにコマがおかれている
