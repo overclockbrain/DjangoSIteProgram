@@ -10,7 +10,6 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block extraheader %}
-<title>game!!</title>
 <link rel="stylesheet" href="{% static 'othellosite/css/style.css' %}">
 <link rel="stylesheet" href="{% static 'othellosite/css/body.css' %}">
 <script src="{% static 'othellosite/js/jquery-3.6.0.min.js' %}"></script>
@@ -80,8 +79,8 @@
     {% csrf_token %}
     <div id="game_start-section">
         <div class="view">
-            <h2><span id="turn">黒(あなた)</span> の番</h2>
-            <h2>白: <span class="putWhite" id="white">2</span> 黒: <span class="putBlack" id="black">2</span></h2>
+            <h2>TURN<br><span id="turn">黒</span></h2>
+            <h2>白: <span class="putWhite" id="white">2</span> | 黒: <span class="putBlack" id="black">2</span></h2>
             <input type="hidden" id="whiteVal" name="whiteVal" value="2">
             <input type="hidden" id="blackVal" name="blackVal" value="2">
             <input type="hidden" id="height" name="height">
@@ -89,9 +88,9 @@
         </div>
         <div id="playground"></div>
         <div class="action">
-            <input type="button" id="pass" value="パス" onclick="board.pass()">
-            <input type="button" id="hint" value="ヒント" onclick="board.search()">
-            <hr><input type="submit" value="リザルト画面に進む" id="to_result_page">
+            <input class="btn btn-info" type="button" id="pass" value="PASS" onclick="board.pass()">
+            <input class="btn btn-info" type="button" id="hint" value="TIPS" onclick="board.search()">
+            <hr><input class="btn btn-primary" type="submit" value="リザルト画面に進む" id="to_result_page">
         </div>
     </div>
 

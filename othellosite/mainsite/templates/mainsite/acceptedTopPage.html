@@ -3,17 +3,22 @@
 {% block main %}
 {% load static %}
 <header>
-    <h1>バリアブルオセロ</h1>
-    <h2>盤面設定</h2>
+    <h1>盤面設定</h1>
 </header>
 
 <form action="{% url 'gamePage' %}" method="post"  class="inline-block">
     {% csrf_token %}
-    縦：<input type="range" min="4" max="10" step="2" id="high" name="high">
+    縦：<input class="x-range" type="range" min="4" max="10" step="2" id="high" name="high">
     <input type="number" id="viewy" value="8" readonly><br>
-    横：<input type="range" min="4" max="10" step="2" id="width" name="width">
+    横：<input class="y-range" type="range" min="4" max="10" step="2" id="width" name="width">
     <input type="number" id="viewx" value="8" readonly>
-    {% bootstrap_button button_type="submit" content="ゲームスタート" %}
+    <br>
+    <button class="playbutton" type="submit">
+        <span class="playbutton_lg">
+            <span class="playbutton_sl"></span>
+            <span class="playbutton_text">Play Now!</span>
+        </span>
+    </button>
 </form>
 
 
