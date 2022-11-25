@@ -5,7 +5,7 @@
 - 各自のファイルを作成するからそこを指定してね
 - もし間違ってしまってもいいように毎日バックアップとしてPCに全体のファイルを保存しておくよ
 
-## 使用言語
+## 使用言語,使用環境
 [![My Skills](https://skillicons.dev/icons?i=js,jquery,html,css,bootstrap,sqlite,py,tensorflow,md,vscode,github)](https://skillicons.dev)
 
 ## 実行確認
