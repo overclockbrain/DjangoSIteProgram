@@ -6,7 +6,7 @@
 - もし間違ってしまってもいいように毎日バックアップとしてPCに全体のファイルを保存しておくよ
 
 ## 使用言語,使用環境
-[![My Skills](https://skillicons.dev/icons?i=js,jquery,html,css,bootstrap,sqlite,py,tensorflow,django,md,vscode,github)](https://skillicons.dev)
+![My Skills](https://skillicons.dev/icons?i=js,jquery,html,css,bootstrap,sqlite,py,tensorflow,django,md,vscode,github)
 
 ## 実行確認
 - 仮想環境の作成
