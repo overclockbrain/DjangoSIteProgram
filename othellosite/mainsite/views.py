@@ -5,6 +5,9 @@ Merge Miyamoto's Program
 11/24
 Made DoS Attack avoidance code
 
+11/26
+Made ratepage
+
 """
 from django.http import HttpRequest,JsonResponse
 from django.shortcuts import HttpResponse
@@ -80,6 +83,14 @@ def resultPage(request):
     else:
         # 何もポストされてない状態だとtopに返す。
         return render(request,"mainsite/topPage.html")
+    
+    
+# ratepage
+def rate(request):
+    return render(request,"mainsite/rate.html")
+
+def overview(request):
+    return render(request,"mainsite/overview.html")
 
 # ajax で送られてきたデータ取得
 def predict(request):

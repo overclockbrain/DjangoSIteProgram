@@ -4,7 +4,7 @@
     created by Y.Miyamoto on 2022.11.8
     created by R.Morioka on 2022.11.14
     Do:Merge Miyamoto's branch program
- -->
+-->
 {% extends "base.html" %}
 {% load pygmentize %}
 {% load django_bootstrap5 %}
@@ -79,7 +79,7 @@
     {% csrf_token %}
     <div id="game_start-section">
         <div class="view">
-            <h2>TURN<br><span id="turn">黒</span></h2>
+            <h2>TURN<br><span id="turn">黒(あなた)</span></h2>
             <h2>白: <span class="putWhite" id="white">2</span> | 黒: <span class="putBlack" id="black">2</span></h2>
             <input type="hidden" id="whiteVal" name="whiteVal" value="2">
             <input type="hidden" id="blackVal" name="blackVal" value="2">

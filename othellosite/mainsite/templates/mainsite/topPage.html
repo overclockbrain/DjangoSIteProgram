@@ -19,16 +19,13 @@
 <!--11/09追加（K.Y）-->
 
 <div class="inner">
-    <img src="{% static 'othellosite/img/osero.jpg' %}"alt="" width="600" height="300">
+    <img src="{% static 'othellosite/img/osero.jpg' %}" alt="" width="600" height="300">
 </div>
 <br>
 <!--11/09ここまで-->
 
 <div>
-    <a href="{% url 'acceptedTopPage' %}">
-        <button class="btn btn-outline-primary bi bi-play-fill btn-lg" id="goGame" disabled> GAME PLAY</button>
-    </a>
-
+    <button class="btn btn-outline-primary bi bi-play-fill btn-lg" id="goGame" onclick="location.href='{% url 'acceptedTopPage' %}'" disabled> GAME PLAY</button>
     <button class="btn btn-outline-danger bi bi-x-lg btn-lg ms-5" onclick="location.href='https://google.com'"> FINISH</button>
 </div>
 
