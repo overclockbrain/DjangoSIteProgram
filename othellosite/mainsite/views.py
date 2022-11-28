@@ -27,12 +27,15 @@ def acceptedTopPage(request):
 
 # ゲームページ
 def gamePage(request):
-    """ boardInfo = {}
-    boardInfo["board"] = o.othello_board(6,6)
-    return render(request,"mainsite/gamePage.html",boardInfo) """
     if request.method == "POST":
         height = request.POST["high"]
         width = request.POST["width"]
+        # 値チェック
+        if height > 10 or height < 4:
+            height = 4
+        if width > 10 or width < 4:
+            width = 4
+        
         board = {
             "height":height,
             "width":width
