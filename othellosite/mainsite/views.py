@@ -28,8 +28,8 @@ def acceptedTopPage(request):
 # ゲームページ
 def gamePage(request):
     if request.method == "POST":
-        height = request.POST["high"]
-        width = request.POST["width"]
+        height = int(request.POST["high"])
+        width = int(request.POST["width"])
         # 値チェック
         if height > 10 or height < 4:
             height = 4
