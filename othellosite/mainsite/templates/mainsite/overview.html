@@ -2,11 +2,16 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% block main %}
-<h2>概要 〜variable othelloって？〜</h2>
+<h1>overview</h1>
+<h2>〜variable othelloって？〜</h2>
 <p>
     日本語訳すると可変式オセロです。<br>
     可変式オセロって聞くと何のこととなると思います。<br>
-    
+    これは簡単にいうと縦横のマスの数を<br>
+    自分で決めることができるオセロゲームなのです。<br>
+    ぜひ新感覚のオセロをお楽しみください！<br><br>
+    <img src="{% static 'othellosite/img/othello.png' %}" style="border:#000 solid 1px;"><br><br>
+    <a href="{% url 'topPage' %}">ゲームをプレイする</a>
 </p>
 
 {% endblock %}

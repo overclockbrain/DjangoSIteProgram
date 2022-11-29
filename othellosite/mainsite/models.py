@@ -10,8 +10,9 @@ class AiLoseManage(models.Model):
     
     
 class AiWinManage(models.Model):
-    winLoseDate = models.CharField("AIの勝ち負け",max_length=10)
+    winLoseData = models.CharField("AIの勝ち負け",max_length=10)
     
-class PlayBoardMange(models.Model):
+class PlayBoardManage(models.Model):
     width = models.IntegerField("width")
     height = models.IntegerField("height")
+    winner = models.CharField("winner",max_length=5,null=True)

@@ -14,7 +14,7 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 # Create your views here.
 from mainsite.game import TurnOfAi
-from mainsite.models import AiLoseManage,AiWinManage,PlayBoardMange
+from mainsite.models import AiLoseManage,AiWinManage,PlayBoardManage
 
 
 # topページの表示設定
@@ -71,7 +71,7 @@ def resultPage(request):
                 
             # データベースに保存
         
-            playboardmanage = PlayBoardMange(width=width,height=height)
+            playboardmanage = PlayBoardManage(width=width,height=height,winner=winner)
             playboardmanage.save()
             win = AiWinManage(winLoseDate=winner)
             win.save()
@@ -90,7 +90,35 @@ def resultPage(request):
     
 # ratepage
 def rate(request):
-    return render(request,"mainsite/rate.html")
+    aiwin = AiWinManage.objects.all().filter(winLoseData="AI").count()
+    userwins = AiWinManage.objects.all().filter(winLoseData="あなた").count()
+    draw = AiWinManage.objects.all().filter(winLoseData="ドロー").count()
+    
+    boards = []
+    manboards = []
+    for height in range(4,12,2):
+        for width in range(4,12,2):
+            manboards.append(str(height) + "×" + str(width))
+            boards.append(PlayBoardManage.objects.all().filter(height=height,width=width).count())
+    
+    print(manboards)
+    print(boards)
+            
+    #ゼロ除算が発生した場合の処理
+    if aiwin == 0:
+        return render(request,"mainsite/topPage.html")
+    else:
+        winrate = int((aiwin / (aiwin + userwins)) * 100)
+        
+    data = {
+        "aiwin":aiwin,
+        "userwins":userwins,
+        "draw":draw,
+        "win":winrate,
+        
+        "board":boards
+    }
+    return render(request,"mainsite/rate.html",data)
 
 def overview(request):
     return render(request,"mainsite/overview.html")
