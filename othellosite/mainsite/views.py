@@ -72,8 +72,8 @@ def resultPage(request):
             # データベースに保存
         
             playboardmanage = PlayBoardManage(width=width,height=height,winner=winner)
+            win = AiWinManage(winLoseData=winner)
             playboardmanage.save()
-            win = AiWinManage(winLoseDate=winner)
             win.save()
             
             komaInfo = {
@@ -91,32 +91,44 @@ def resultPage(request):
 # ratepage
 def rate(request):
     aiwin = AiWinManage.objects.all().filter(winLoseData="AI").count()
-    userwins = AiWinManage.objects.all().filter(winLoseData="あなた").count()
+    userwin = AiWinManage.objects.all().filter(winLoseData="あなた").count()
     draw = AiWinManage.objects.all().filter(winLoseData="ドロー").count()
     
+    # ボードごとの試合数を取ってくる
     boards = []
     manboards = []
+    aiWinOfBoards = []
+    userWinOfBoards = []
+    winrateBoards = []
+    i = 0
     for height in range(4,12,2):
         for width in range(4,12,2):
             manboards.append(str(height) + "×" + str(width))
             boards.append(PlayBoardManage.objects.all().filter(height=height,width=width).count())
-    
-    print(manboards)
-    print(boards)
-            
+            # ボードごとのとAI、ユーザーの勝利数を取得
+            aiWinOfBoards.append(PlayBoardManage.objects.all().filter(height=height,width=width,winner="AI").count())
+            userWinOfBoards.append(PlayBoardManage.objects.all().filter(height=height,width=width,winner="あなた").count())
+            # ゼロ除算を避けるためにあえてややこしく
+            if aiWinOfBoards[i] == 0 and userWinOfBoards[i] == 0:
+                winrateBoards.append(0)
+            else:
+                winrateBoards.append(aiWinOfBoards[i] / (aiWinOfBoards[i] + userWinOfBoards[i]) * 100)
+            i += 1
+        
+    #zip化して使いやすくする     
+    zipListBoards = zip(manboards,winrateBoards)
     #ゼロ除算が発生した場合の処理
     if aiwin == 0:
         return render(request,"mainsite/topPage.html")
     else:
-        winrate = int((aiwin / (aiwin + userwins)) * 100)
+        winrate = int((aiwin / (aiwin + userwin)) * 100)
         
     data = {
         "aiwin":aiwin,
-        "userwins":userwins,
+        "userwin":userwin,
         "draw":draw,
         "win":winrate,
-        
-        "board":boards
+        "winBoard":zipListBoards
     }
     return render(request,"mainsite/rate.html",data)
 
