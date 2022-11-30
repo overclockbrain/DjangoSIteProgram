@@ -104,6 +104,7 @@ def rate(request):
     for height in range(4,12,2):
         for width in range(4,12,2):
             manboards.append(str(height) + "×" + str(width))
+            # プレイ回数の入った配列を作成
             boards.append(PlayBoardManage.objects.all().filter(height=height,width=width).count())
             # ボードごとのとAI、ユーザーの勝利数を取得
             aiWinOfBoards.append(PlayBoardManage.objects.all().filter(height=height,width=width,winner="AI").count())
