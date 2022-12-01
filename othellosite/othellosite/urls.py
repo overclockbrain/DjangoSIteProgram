@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 
-from mainsite.views import gamePage, resultPage, topPage,acceptedTopPage,predict,rate,overview
+from mainsite.views import gamePage, resultPage, topPage,acceptedTopPage,predict,rate,outline
 
 urlpatterns = [
     path('',topPage, name="topPage"),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('game/',gamePage,name="gamePage"),
     path('result/',resultPage, name="resultPage"),
     path('rate/',rate,name="rate"),
-    path('overview/',overview,name="overview"),
+    path('outline/',outline,name="outline"),
     path('admin/', admin.site.urls),
     path('predict/', predict, name="predict")
 ]

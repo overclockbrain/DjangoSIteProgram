@@ -133,8 +133,8 @@ def rate(request):
     }
     return render(request,"mainsite/rate.html",data)
 
-def overview(request):
-    return render(request,"mainsite/overview.html")
+def outline(request):
+    return render(request,"mainsite/outline.html")
 
 # ajax で送られてきたデータ取得
 def predict(request):
