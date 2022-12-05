@@ -8,6 +8,28 @@ main {
     text-align:center;
 }
 
+/*--見出し--*/
+.headline{
+    position: relative;
+    display: inline-block;
+    padding: 0 55px;   
+}
+.headline:before, .headline:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    width: 45px;
+    height: 1px;
+    background-color: black;
+}
+.headline:before {
+    left:0;
+}
+.headline:after {
+    right: 0;
+}
+
 /*-------背景-------*/
 .bgimg{
     background-image: url("../img/whitebg1.jpg");
