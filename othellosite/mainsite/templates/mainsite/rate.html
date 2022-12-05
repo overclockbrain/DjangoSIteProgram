@@ -2,17 +2,37 @@
 {% load static %}
 {% load django_bootstrap5 %}
 {% block main %}
-<h1>rate</h1>
-<h2>勝利数</h2>
-AI : {{ aiwin }}回<br>
-user : {{ userwin }}回<br>
-draw : {{ draw }}回<br>
-<h2>AIの全体の勝率</h2>
-{{ win }}%
-<h2>盤面ごとの勝率</h2>
-{% for b,w in winBoard %}
-    <p>{{ b }}の勝率</p>
-    <p>{{ w|floatformat }}%</p>
-{% endfor %}
+<h1 class="headline">Rate</h1><br>
 <br>
+<div class="row">
+    <div class="col-6">
+        <h2>勝利数</h2>
+        <h4 class="display-6">AI : {{ aiwin }}回</h4>
+        <h4 class="display-6">user : {{ userwin }}回</h4>
+        <h4 class="display-6">draw : {{ draw }}回</h4>
+    </div>
+    <div class="col-6">
+        <h2>AIの全体の勝率</h2>
+        <h1 class="display-1" style="text-decoration: underline;">　{{ win }}%　</h1>
+    </div>
+</div>
+<br>
+<h2>盤面ごとの勝率</h2>
+
+{% for b,w in winBoard %}
+<table class="table border border-2" style="width:33%;float:left;margin:auto;">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">{{ b }}の勝率</th>
+      </tr>
+    </thead>
+    <tbody class="table-light">
+      <tr>
+        <th scope="row">{{ w|floatformat }}%</th>
+      </tr>
+    </tbody>
+</table>
+{% endfor %}
+<div style="margin: 0px 0px 600px;"></div>
+
 {% endblock %}
