@@ -13,9 +13,12 @@
     <h2><div class="bi bi-trophy-fill" id="win">Winner</div>{{ winner }}</h2>
 </div>
 
+<div style="margin: 0px 0px 50px;"></div>
+<img src="{% static 'othellosite/img/teamlogo.png' %}" width="300">
+<div style="margin: 0px 0px 20px;"></div>
+
 <div>
-
 <a href="{% url 'acceptedTopPage' %}">{% bootstrap_button button_type="submit" content="もう一度プレイ!" %}</a>
-
 </div>
+<div style="margin: 0px 0px 100px;"></div>
 {% endblock %}
