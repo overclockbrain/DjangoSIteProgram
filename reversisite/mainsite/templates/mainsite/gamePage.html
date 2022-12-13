@@ -1,0 +1,115 @@
+<!-- 
+    game.html
+
+    created by Y.Miyamoto on 2022.11.8
+    created by R.Morioka on 2022.11.14
+    Do:Merge Miyamoto's branch program
+-->
+{% extends "base.html" %}
+{% load pygmentize %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block extraheader %}
+<link rel="stylesheet" href="{% static 'reversisite/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'reversisite/css/body.css' %}">
+<script src="{% static 'reversisite/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'reversisite/js/anime.min.js' %}"></script>
+<script src="{% static 'reversisite/js/jsai.js' %}"></script>
+<script type="text/javascript">
+    const KOMAIMG = {
+        0: "{% static 'reversisite/img/none.png' %}",
+        1: "{% static 'reversisite/img/black.jpg' %}",
+        2: "{% static 'reversisite/img/white.jpg' %}"
+    }
+
+    // Pythonとやりとり
+    // References: https://office54.net/python/django/django-ajax
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    function predict(data) {
+        $.ajax({
+            type: "post",
+            url: "{% url 'predict' %}",
+            data: data,
+            dataType: "json",
+            async: true,
+        }).done(function (response) {
+            board.aiTurn(response.action);
+        }).fail(function () {
+            console.log("failed");
+        });
+    };
+</script>
+<script src="{% static 'reversisite/js/reversi.js' %}"></script>
+{% endblock %}
+{% block main %}
+
+<!-- ここにフォームを入れてうまくPOSTでデータを送信する -->
+<form action="{% url 'resultPage' %}" method="post">
+    {% csrf_token %}
+    <div id="game_start-section">
+        <div class="view">
+            <h2>TURN<br><span id="turn">黒(あなた)</span></h2>
+            <h2>白: <span class="putWhite" id="white">2</span> | 黒: <span class="putBlack" id="black">2</span></h2>
+            <input type="hidden" id="whiteVal" name="whiteVal" value="2">
+            <input type="hidden" id="blackVal" name="blackVal" value="2">
+            <input type="hidden" id="height" name="height">
+            <input type="hidden" id="width" name="width">
+        </div>
+        <div id="playground"></div>
+        <div class="action">
+            <input class="btn btn-info" type="button" id="pass" value="PASS" onclick="board.pass()">
+            <input class="btn btn-info" type="button" id="hint" value="TIPS" onclick="board.search()">
+            <hr><input class="btn btn-primary" type="submit" value="リザルト画面に進む" id="to_result_page">
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    const playground = document.getElementById('playground');
+    {% autoescape off %}
+    const board = new Board(parseInt({{ height }}), parseInt({{ width }}));
+    {% endautoescape %}
+    playground.appendChild(board.boardElement);
+    playground.appendChild(board.messageElement);
+
+    document.getElementById("to_result_page").style.display = "none";
+
+    console.log(board);
+    //hidden要素を追加する
+    document.getElementById("height").setAttribute("value", {{ height }});
+    document.getElementById("width").setAttribute("value", {{ width }});
+</script>
+<div style="margin: 0px 0px 100px;"></div>
+{% endblock %}

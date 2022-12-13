@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block main %}
+<h1 class="headline">Outline</h1>
+<h2>〜variable Reversiって？〜</h2>
+<p>
+    日本語訳すると可変盤面式リバーシです。<br>
+    可変盤面式リバーシって聞くと何のこととなると思います。<br>
+    これは簡単にいうと縦横のマスの数を<br>
+    自分で決めることができるリバーシなのです。<br>
+    ぜひ新感覚のリバーシをお楽しみください！<br><br>
+    <img src="{% static 'reversisite/img/reversi2.png' %}" class="img-fluid" style="border:#000 solid 1px;"><br><br>
+    <a class="btn btn-outline-primary bi bi-play-fill btn-lg col-md-4 col-sm-6 col-xs-12" href="{% url 'topPage' %}">ゲームをプレイする</a>
+</p>
+
+{% endblock %}
