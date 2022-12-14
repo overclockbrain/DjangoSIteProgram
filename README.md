@@ -22,11 +22,12 @@ python –m venv お好きな名前
 ~~~bash
 pip install django
 pip install django-bootstrap5
+pip install django-pygments-renderer
 ~~~
 - ゲームで遊ぶために  
 ~~~bash
 # tensorflowの最新版をダウンロード
-# 時間はかかるので紅茶を飲んで待ちましょう
+# 時間がかかるので紅茶を飲んで待ちましょう
 pip install --upgrade tensorflow
 pip install numpy
 
@@ -39,10 +40,11 @@ python manage.py runserver
 ~~~
 - ローカルのサーバーにアクセス
 ~~~
-http://127.0.0.1:8000/game
+http://127.0.0.1:8000/
 ~~~
 - サーバー終了
 ~~~
+#ターミナル画面で
 Ctrl + C
 ~~~
 - 仮想環境の終了
