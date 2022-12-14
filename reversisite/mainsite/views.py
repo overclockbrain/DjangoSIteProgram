@@ -139,17 +139,18 @@ def outline(request):
 # ajax で送られてきたデータ取得
 def predict(request):
     
-    height = int(request.POST.get("height"))
-    width = int(request.POST.get("width"))
-    state = request.POST.getlist("state")
-    AI = TurnOfAi(height, width, state)
-    if (AI.model):
-        action = AI.get_best_hand()     # 推論を行い最善手を取得する
-    else:
-        action = -1
-
+#    height = int(request.POST.get("height"))
+#    width = int(request.POST.get("width"))
+#    state = request.POST.getlist("state")
+#    AI = TurnOfAi(height, width, state)
+#    if (AI.model):
+#        action = AI.get_best_hand()     # 推論を行い最善手を取得する
+#    else:
+#        action = -1
+#
     response_data = {
-        "action": int(action)
+#        "action": int(action)
+        "action":int(-1)
     }
     
     return JsonResponse(response_data)
