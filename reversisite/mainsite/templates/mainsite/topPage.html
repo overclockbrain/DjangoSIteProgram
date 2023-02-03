@@ -1,34 +1,117 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extraheader %}
-<link rel="stylesheet" href="{% static 'reversisite/css/body.css' %}">
+
 {% endblock %}
 {% block main %}
 <!--11/08真ん中に寄せた(K.Y)-->
-<div class="center-block">
-    <h1 class="headline">確認事項</h1>
+<!--  ゲーム説明  -->
+<div style="margin: 0px 0px 15px;"></div>
+<h1 class="headline">Explanation</h1>
+<div style="margin: 0px 0px 15px;"></div>
 
-    <!--11/10pdfサイト貼り付け-->
-    <div>
-        <a href="{% static 'reversisite/pdf/利用規約.pdf' %}" target="_blank"><button class="btn btn-outline-dark bi bi-file-earmark-text btn-sm" onclick="readRulebook()"> 利用規約を読む</button></a>
-        <input class="form-check-input" type="checkbox" id="accept" onclick="getUserAccept()" disabled>
-        <label class="form-check-label" for="accept">同意する</label>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4><i style="color: #ff6347;" class="bi bi-dice-1"></i> 盤面設定 <i style="color: #ff6347;" class="bi bi-dice-1"></i></h4>
+            <h6>盤面設定ページにあるスライダーから、プレイしたい縦と横の幅を設定してください。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/rule1.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
     </div>
-</div>
-<br>
-<!--11/08 ここまで(K.Y)-->
-<!--11/09追加（K.Y）-->
+    <div style="margin: 0px 0px 50px;"></div>
 
-<div class="inner">
-    <img src="{% static 'reversisite/img/reversi.jpg' %}" class="img-fluid" alt="">
+
+    <div class="row">
+        <div class="col-6">
+            <h4><i style="color: #ff6347;" class="bi bi-dice-2"></i> 先手,後手 <i style="color: #ff6347;" class="bi bi-dice-2"></i></h4>
+            <h6>先手をプレイしたい場合はそのままコマを置いてください。<br>後手をプレイしたい場合は初手にPASSボタンを押下してください。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/rule2.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 50px;"></div>
+
+
+    <div class="row">
+        <div class="col-6">
+            <h4><i style="color: #ff6347;" class="bi bi-dice-3"></i> ヒント <i style="color: #ff6347;" class="bi bi-dice-3"></i></h4>
+            <h6>置くことができるマスを確認したい場合、HINTボタンを押下してください。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/rule3.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 50px;"></div>
+
+
+    <div class="row">
+        <div class="col-6">
+            <h4><i style="color: #ff6347;" class="bi bi-dice-4"></i> リザルト <i style="color: #ff6347;" class="bi bi-dice-4"></i></h4>
+            <h6>ゲームが終了すると「リザルト画面に進む」ボタンが表示されます。</h6>
+            <h6>ボタン押下後、再度プレイしたい場合はリザルト画面の「もう一度プレイ！」ボタンを押下してください。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/rule4.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 20px;"></div>
+    <div class="row">
+        <div class="col-6">
+            <h6>ボタン押下後、再度プレイしたい場合はリザルト画面の「もう一度プレイ！」ボタンを押下してください。</h6>
+        </div>
+        <div class="col-6">
+            <img src="{% static 'reversisite/img/rule4-2.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 80px;"></div>
+    
 </div>
-<br>
-<!--11/09ここまで-->
+
+<!------------------------------------------------------>
+
+<!--その他ページ紹介-->
+<h1 class="headline">others</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4><i class="bi bi-file-earmark-bar-graph"></i> Rate</h4>
+            <h6>Rateページでは、全体の勝率と各盤面の勝率を見ることができます。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/others1.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 50px;"></div>
+
+    <div class="row">
+        <div class="col-6">
+            <h4><i class="bi bi-file-earmark-text"></i> Outline</h4>
+            <h6>Outlineページでは、ゲームの経緯を見ることができます。</h6>
+        </div>
+        <div class="col-6">
+            <br>
+            <img src="{% static 'reversisite/img/others2.png' %}" class="img-fluid border border-success" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div style="margin: 0px 0px 50px;"></div>
+
+</div>
+
+<!------------------------------------------------------>
 
 <div>
-    <button class="btn btn-outline-primary bi bi-play-fill btn-lg col-md-4 col-sm-6 col-xs-12" id="goGame" onclick="location.href='{% url 'acceptedTopPage' %}'" disabled> GAME PLAY</button>
+    <button class="btn btn-outline-primary bi bi-play-fill btn-lg col-md-4 col-sm-6 col-xs-12" id="goGame" onclick="location.href='{% url 'acceptedTopPage' %}'"> GAME PLAY</button>
     <button class="btn btn-outline-danger bi bi-x-lg btn-lg col-md-4 col-sm-6 col-xs-12" onclick="location.href='https://google.com'"> FINISH</button>
 </div>
+<div style="margin: 0px 0px 20px;"></div>
 
 <script lang="text/javascript">
     var isCheck = document.getElementById("accept");
