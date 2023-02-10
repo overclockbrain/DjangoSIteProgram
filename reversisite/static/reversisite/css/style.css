@@ -69,7 +69,7 @@ header .headline{
 input[type=range] {
     -webkit-appearance: none;
     margin: 10px 0;
-    width: 20%;
+    width: 60%;
 }
 input[type=range]:focus {
     outline: none;
@@ -155,6 +155,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /*------------playbutton---------------*/
 .playbutton {
+    width: 50%;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -311,3 +312,44 @@ footer{
     font-size: 18px;
 }
 /*-------------------------------*/
+
+/*nextbutton*/
+.nextbutton {
+    width: 50%;
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+   }
+   
+   .nextbutton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms
+   }
+   
+   .nextbutton:hover {
+    color: #e8e8e8;
+   }
+   
+   .nextbutton:hover::before {
+    width: 100%;
+   }
