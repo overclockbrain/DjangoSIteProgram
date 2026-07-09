@@ -1,2 +1,12 @@
 reversisite/static/reversisite/model
 models
+# --- 自動追加(乱雑さ解消) ---
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+.next/
+.DS_Store
+.ipynb_checkpoints/
+
